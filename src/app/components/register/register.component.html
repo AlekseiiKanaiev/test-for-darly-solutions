@@ -1,1 +1,12 @@
-<p>register works!</p>
+<!-- <p>register works!</p> -->
+<form [formGroup] = 'registerForm' novalidate (ngSubmit) = 'register(registerForm.value)'>
+    <label>Email</label>
+    <input class = 'form-control' formControlName="userEmail" placeholder="Enter your email">
+    <label>Password</label>
+    <input class="form-control" formControlName="userPassword" placeholder="Enter your password">
+    <label>{{ errorMessage }}</label>
+    <label>{{ successMessage }}</label>
+    <button>Register</button>
+</form>
+
+    
