@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
 import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +12,12 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(private authServ: AuthService, private fb: FormBuilder) {
+  constructor(private authServ: AuthService, private fb: FormBuilder, private router: Router) {
   }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(24)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
@@ -40,12 +42,6 @@ export class RegisterComponent implements OnInit {
         confPass.setErrors(null);
       }
     };
-
-    // console.log(this.registerForm.get('userPassword').value);
-    // if (password.value !== passwordConfirm.value) {
-    //   return {userPasswordRepeat: true};
-    // }
-    // return null;
   }
 
   register(value) {
@@ -56,19 +52,17 @@ export class RegisterComponent implements OnInit {
       console.log('invalid');
       return;
     } else {
-      this.authServ.doRegister(value);
-        // .then(
-        //   res => {
-        //     console.log(res);
-        //     this.errorMessage = '';
-        //     this.successMessage = 'You have been registred';
-        //   },
-        //   err => {
-        //     console.log(err);
-        //     this.errorMessage = err.message;
-        //     this.successMessage = '';
-        //   }
-        // );
+      this.authServ.doRegister(value)
+      .then(res => {
+        console.log('Success ');
+        res.user.updateProfile({
+          displayName: this.f.name.value
+        });
+        console.log(res);
+        this.router.navigate(['user']);
+
+    })
+    .catch(err => console.log('Something wrong: ' + err.message));
     }
   }
 }

@@ -4,6 +4,15 @@
             <div class="col-md-6 offset-md-3">
                 <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
                     <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && f.name.errors}">
+                        <div class="invalid-feedback" *ngIf="submitted && f.name.errors">
+                            <div *ngIf="f.name.error.required">Name is requiered</div>
+                            <div *ngIf="f.name.error.minlength">Name must be at least 2 characters</div>
+                            <div *ngIf="f.name.error.maxlength">Name must be no longer 24 characters</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>Email</label>
                         <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">

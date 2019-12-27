@@ -2,13 +2,14 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
     userData: Observable<firebase.User>;
     user: any;
 
-    constructor(public afAuth: AngularFireAuth) {
+    constructor(public afAuth: AngularFireAuth, private router: Router) {
         this.userData = afAuth.authState;
         this.userData.subscribe(
             user => {
@@ -37,13 +38,6 @@ export class AuthService {
     }
 
     doEmailAndPasswordLogin(value) {
-        // return new Promise<any>((resolve, reject) => {
-        //     firebase.auth().signInWithEmailAndPassword(value.email, value.password)
-        //         .then(
-        //             res => resolve(res),
-        //             err => reject(err)
-        //         );
-        // });
         return this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password)
             .then(res => {
                 console.log('Success');
@@ -54,19 +48,7 @@ export class AuthService {
     }
 
     doRegister(value) {
-        // return new Promise<any>((resolve, reject) => {
-        //     firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-        //         .then(
-        //             res => resolve(res),
-        //             err => reject(err)
-        //         );
-        // });
-        this.afAuth.auth.createUserWithEmailAndPassword(value.email, value.password)
-            .then(res => {
-                console.log('Success ');
-                console.log(res);
-            })
-            .catch(err => console.log('Something wrong: ' + err.message));
+        return this.afAuth.auth.createUserWithEmailAndPassword(value.email, value.password);
     }
 
     logOut() {

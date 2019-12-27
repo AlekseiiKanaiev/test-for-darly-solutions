@@ -45,20 +45,12 @@ export class LoginComponent implements OnInit {
           }
         );
     }
-      // .then(
-      //   res => console.log(res)
-      // )
-      // .catch(
-      //   err => console.log('Denied: ' + err.message)
-      // );
-    // console.log(this.loginForm);
-    // console.log(value);
-    // this.authServ.doEmailAndPasswordLogin(value);
   }
-  doGoogleLogin() {
+
+  googleLogin() {
     this.authServ.doGoogleLogin()
       .then(
-        res => {
+        user => {
           this.router.navigate(['user']);
         }
       );

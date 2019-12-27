@@ -8,14 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-  user: string;
+  user: any;
   constructor(private authServ: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.authServ.userData.subscribe(
       user => {
         console.log(user);
-        if (user) { this.user = user.email; }
+        if (user) { this.user = user; }
       }
     );
   }
