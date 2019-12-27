@@ -17,14 +17,10 @@ export class UserComponent implements OnInit {
         console.log(user);
         if (user) {
           this.user = user;
-          // location.reload();
         }
       }
     );
   }
-  // ngAfterViewInit() {
-  //   location.reload();
-  // }
 
   logOut() {
     this.authServ.logOut();

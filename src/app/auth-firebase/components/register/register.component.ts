@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  register(value: { email: string, password: string }) {
+  register(value: {name: string, email: string, password: string }) {
     console.log(value);
     this.submitted = true;
 
@@ -52,17 +52,11 @@ export class RegisterComponent implements OnInit {
       console.log('invalid');
       return;
     } else {
-      this.authServ.doRegister(value)
-      .then(res => {
-        console.log('Success ');
-        res.user.updateProfile({
-          displayName: this.f.name.value
-        });
-        console.log(res);
-        this.router.navigate(['user']);
-
-    })
-    .catch(err => console.log('Something wrong: ' + err.message));
+      this.authServ.doRegister(value);
     }
+  }
+
+  toLogin() {
+    this.router.navigate(['login']);
   }
 }

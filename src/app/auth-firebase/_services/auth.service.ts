@@ -3,13 +3,18 @@ import * as firebase from 'firebase/app';
 import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AlertService } from './alert.service';
 
 @Injectable()
 export class AuthService {
     userData: Observable<firebase.User>;
     user: firebase.User;
 
-    constructor(public afAuth: AngularFireAuth, private router: Router, private ngZone: NgZone) {
+    constructor(public afAuth: AngularFireAuth,
+                private router: Router,
+                private ngZone: NgZone,
+                private alertServ: AlertService) {
+
         this.userData = afAuth.authState;
         this.userData.subscribe(
             (user: firebase.User) => {
@@ -27,7 +32,11 @@ export class AuthService {
         return JSON.parse(localStorage.getItem('user')) !== null;
     }
 
-    socialLogin(provider: firebase.auth.GoogleAuthProvider) {
+    private navigate(url: string) {
+        this.ngZone.run(() => this.router.navigate([url]));
+    }
+
+    private socialLogin(provider: firebase.auth.GoogleAuthProvider) {
         return this.afAuth.auth.signInWithPopup(provider);
     }
 
@@ -36,29 +45,47 @@ export class AuthService {
         provider.addScope('profile');
         provider.addScope('email');
         this.socialLogin(provider)
-            .then(res => this.ngZone.run(() => this.router.navigate(['user'])))
-            .catch(err => console.log(err.message));
+            .then(res => {
+                this.alertServ.alertSuccess('You have been successfully logged in', true);
+                this.navigate('user');
+            })
+            .catch(err => {
+                console.log(err.message);
+                this.alertServ.alertError(err.message);
+            });
     }
 
     async doEmailAndPasswordLogin(value: { email: string; password: string; }) {
         try {
             const res = await this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password);
-            console.log('Success');
-            console.log(res);
-            this.ngZone.run(() => this.router.navigate(['user']));
+            this.alertServ.alertSuccess('You have been successfully logged in', true);
+            this.navigate('user');
         } catch (err) {
-            return console.log('Dinied: ' + err.message);
+            return this.alertServ.alertError(err.message);
         }
     }
 
-    doRegister(value: { email: string; password: string; }) {
-        return this.afAuth.auth.createUserWithEmailAndPassword(value.email, value.password);
+    doRegister(value: {name: string, email: string; password: string; }) {
+        this.afAuth.auth.createUserWithEmailAndPassword(value.email, value.password)
+            .then(
+                res => {
+                    res.user.updateProfile({displayName: value.name});
+                    this.alertServ.alertSuccess('You have been successfully registred', true);
+                    this.navigate('user');
+                }
+            )
+            .catch(
+                err => {
+                    console.log('Something wrong: ' + err.message);
+                    this.alertServ.alertError(err.message);
+                }
+            );
     }
 
     logOut() {
         this.afAuth.auth.signOut().then(() => {
             localStorage.removeItem('user');
-            this.ngZone.run(() => this.router.navigate(['login']));
+            this.navigate('login');
         });
     }
 }

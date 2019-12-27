@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
+import { AlertComponent } from './components/alert/alert.component';
+import { AlertService } from './_services/alert.service';
 
 const authRoutes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -21,7 +23,8 @@ const authRoutes: Routes = [
 @NgModule({
     declarations: [
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        AlertComponent
     ],
     imports: [
         CommonModule,
@@ -33,7 +36,10 @@ const authRoutes: Routes = [
         AngularFireStorageModule,
         AngularFireAuthModule,
     ],
-    providers: [AuthService],
-    exports: [RouterModule]
+    providers: [
+        AuthService,
+        AlertService
+    ],
+    exports: [RouterModule, AlertComponent]
 })
 export class AuthFirebaseModule {}

@@ -7,13 +7,12 @@ import { UserComponent } from './components/user/user.component';
 import { AuthService } from './auth-firebase/_services/auth.service';
 import { AuthGuard } from './auth-firebase/_guards/auth.guard';
 import { AuthFirebaseModule } from './auth-firebase/auth.module';
-import { AlertComponent } from './components/alert/alert.component';
+import { AlertService } from './auth-firebase/_services/alert.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +21,8 @@ import { AlertComponent } from './components/alert/alert.component';
   ],
   providers: [
     AuthService,
-    AuthGuard
+    AuthGuard,
+    AlertService
   ],
   bootstrap: [AppComponent]
 })
