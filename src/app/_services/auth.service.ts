@@ -27,7 +27,7 @@ export class AuthService {
         //             err => reject(err)
         //         );
         // });
-        this.afAuth.auth.signInWithEmailAndPassword(value.userEmail, value.userPassword)
+        this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password)
             .then(res => console.log('Success'))
             .catch(err => console.log('Dinied: ' + err.message));
     }
@@ -41,7 +41,10 @@ export class AuthService {
         //         );
         // });
         this.afAuth.auth.createUserWithEmailAndPassword(value.email, value.password)
-            .then(res => console.log('Success ' + res))
+            .then(res => {
+                console.log('Success ');
+                console.log(res);
+            })
             .catch(err => console.log('Something wrong: ' + err.message));
     }
 }
