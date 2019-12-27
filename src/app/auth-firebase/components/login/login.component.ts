@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-  user: string;
+  // user: string;
 
   constructor(private authServ: AuthService, private router: Router, private fb: FormBuilder) {}
 
@@ -20,48 +20,40 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    this.authServ.userData.subscribe(
-      data => {
-        console.log(data);
-        if (data) { this.user = data.email; }
-      }
-    );
+    // this.authServ.userData.subscribe(
+    //   data => {
+    //     console.log(data);
+    //     if (data) { this.user = data.email; }
+    //   }
+    // );
   }
 
    // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
-  login(value) {
+  login(value: {email: string, password: string}) {
+    console.log(value);
     this.submitted = true;
     if (this.loginForm.invalid) {
       console.log('invalid');
       return;
     } else {
       console.log(1);
-      this.authServ.doEmailAndPasswordLogin(value)
-        .then(
-          res => {
-            this.router.navigate(['user']);
-          }
-        );
+      this.authServ.doEmailAndPasswordLogin(value);
     }
   }
 
   googleLogin() {
-    this.authServ.doGoogleLogin()
-      .then(
-        user => {
-          this.router.navigate(['user']);
-        }
-      );
+    this.authServ.doGoogleLogin();
+      // .then(
+      //   user => {
+      //     this.router.navigate(['user']);
+      //   }
+      // );
   }
 
   toRegister() {
     this.router.navigate(['register']);
   }
 
-  logOut() {
-    this.authServ.logOut();
-    this.router.navigate(['login']);
-  }
 }

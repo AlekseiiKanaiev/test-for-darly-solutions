@@ -11,10 +11,11 @@ import { environment } from '../../environments/environment';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthService } from './_services/auth.service';
+import { AuthGuard } from './_guards/auth.guard';
 
 const authRoutes: Routes = [
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
+    {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
+    {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  register(value) {
+  register(value: { email: string, password: string }) {
     console.log(value);
     this.submitted = true;
 
