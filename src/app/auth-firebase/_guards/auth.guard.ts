@@ -9,15 +9,6 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
 
     constructor(private authServ: AuthService, private router: Router, public afAuth: AngularFireAuth) {
-        // this.authServ.userData.subscribe(
-        //     data => {
-        //         console.log('get data in guard');
-        //         console.log(data);
-        //         this.isUser = (data) ? true : false;
-        //     }
-        // );
-        // console.log(afAuth.authState);
-        // this.isUser = (afAuth.authState === null) ? false : true;
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
