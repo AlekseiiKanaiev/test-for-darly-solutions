@@ -1,28 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import * as firebase from 'firebase';
-import { environment } from '../environments/environment';
+import { UserComponent } from './components/user/user.component';
+import { AuthService } from './auth-firebase/_services/auth.service';
+import { AuthGuard } from './auth-firebase/_guards/auth.guard';
+import { AuthFirebaseModule } from './auth-firebase/auth.module';
+import { AlertService } from './auth-firebase/_services/alert.service';
 
 @NgModule({
   declarations: [
     AppComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase, 'test-for-ds'),
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireAuthModule,
+    AuthFirebaseModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard,
+    AlertService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

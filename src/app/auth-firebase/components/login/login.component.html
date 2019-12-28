@@ -1,0 +1,39 @@
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.pattern">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+                <div class="google-login">
+                    <p (click) = 'googleLogin()' class="google-link">Login with Google</p>
+                    <!-- <button class="btn btn-primary" (click) = 'googleLogin()'>Google</button> -->
+                </div>
+                <div class="to-register">
+                    <p>Not registred yet?</p>
+                    <a [routerLink]="['/register']" routerLinkActive="router-link-active" class="register-link">
+                        Create accout now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

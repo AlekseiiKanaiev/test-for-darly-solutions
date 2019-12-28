@@ -1,0 +1,39 @@
+button{
+    width: 100px;
+}
+.google-link{
+    font-size: 20px;
+    cursor: pointer;
+    -webkit-transition: color 0.5s ease;
+    -moz-transition: color 0.5s ease;
+    -o-transition: color 0.5s ease;
+    transition: color 0.5s ease;
+    &:hover{
+        color: #00A1F1;
+    }
+}
+.google-link::before{
+    content: '';
+    width: 20px;
+    height: 30px;
+    display: inline-block;
+    background-image: url('../../../../assets/img/google-icon.svg');
+    background-repeat: no-repeat;
+    background-size: 20px 43px;
+    background-position: inherit;
+    margin-right: 10px;
+}
+.to-register p{
+    margin: 0;
+}
+.register-link{
+    text-decoration: none;
+    color: inherit;
+    -webkit-transition: color 0.5s ease;
+    -moz-transition: color 0.5s ease;
+    -o-transition: color 0.5s ease;
+    transition: color 0.5s ease;
+    &:hover{
+        color: #00A1F1;
+    }
+}
