@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -13,47 +13,29 @@ export class LoginComponent implements OnInit {
   submitted = false;
   // user: string;
 
-  constructor(private authServ: AuthService, private router: Router, private fb: FormBuilder) {}
+  constructor(private authServ: AuthService, private fb: FormBuilder, private alertServ: AlertService) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/[\w.+-]+@[\w.-]+\.[\D]{2,4}/)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    // this.authServ.userData.subscribe(
-    //   data => {
-    //     console.log(data);
-    //     if (data) { this.user = data.email; }
-    //   }
-    // );
   }
 
    // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
   login(value: {email: string, password: string}) {
-    console.log(value);
     this.submitted = true;
     if (this.loginForm.invalid) {
       console.log('invalid');
       return;
     } else {
-      console.log(1);
       this.authServ.doEmailAndPasswordLogin(value);
     }
   }
 
   googleLogin() {
     this.authServ.doGoogleLogin();
-      // .then(
-      //   user => {
-      //     this.router.navigate(['user']);
-      //   }
-      // );
   }
-
-  toRegister() {
-    this.router.navigate(['register']);
-  }
-
 }

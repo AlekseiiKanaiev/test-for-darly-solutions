@@ -7,9 +7,9 @@
                         <label>Name</label>
                         <input type="text" formControlName="name" class="form-control" [ngClass]="{'is-invalid': submitted && f.name.errors}">
                         <div class="invalid-feedback" *ngIf="submitted && f.name.errors">
-                            <div *ngIf="f.name.error.required">Name is requiered</div>
-                            <div *ngIf="f.name.error.minlength">Name must be at least 2 characters</div>
-                            <div *ngIf="f.name.error.maxlength">Name must be no longer 24 characters</div>
+                            <div *ngIf="f.name.errors.required">Name is requiered</div>
+                            <div *ngIf="f.name.errors.minlength">Name must be at least 2 characters</div>
+                            <div *ngIf="f.name.errors.maxlength">Name must be no longer 24 characters</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -17,7 +17,7 @@
                         <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                             <div *ngIf="f.email.errors.required">Email is required</div>
-                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                            <div *ngIf="f.email.errors.pattern">Email must be a valid email address</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,8 +40,10 @@
                         <button class="btn btn-primary">Register</button>
                     </div>
                 </form>
-                <div class="form-group">
-                    <button class="btn btn-primary" (click) = toLogin()>Back to login</button>
+                <div class="to-login">
+                    <a [routerLink]="['/login']" routerLinkActive="router-link-active" class="login-link">
+                        Back to login
+                    </a>
                 </div>
             </div>
         </div>

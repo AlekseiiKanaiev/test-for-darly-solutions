@@ -14,7 +14,6 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.authServ.userData.subscribe(
       (user: firebase.User) => {
-        console.log(user);
         if (user) {
           this.user = user;
         }

@@ -50,7 +50,6 @@ export class AuthService {
                 this.navigate('user');
             })
             .catch(err => {
-                console.log(err.message);
                 this.alertServ.alertError(err.message);
             });
     }
@@ -76,7 +75,6 @@ export class AuthService {
             )
             .catch(
                 err => {
-                    console.log('Something wrong: ' + err.message);
                     this.alertServ.alertError(err.message);
                 }
             );

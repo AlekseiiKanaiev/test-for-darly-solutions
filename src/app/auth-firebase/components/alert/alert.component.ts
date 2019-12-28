@@ -17,7 +17,6 @@ export class AlertComponent implements OnInit, OnDestroy {
     this.subs = this.alertServ.getAlert().subscribe(
       alert => {
         this.alert = alert;
-        console.log(this.alert);
       }
     );
   }

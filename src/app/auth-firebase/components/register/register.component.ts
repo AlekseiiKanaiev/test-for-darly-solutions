@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
-import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -12,13 +11,13 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(private authServ: AuthService, private fb: FormBuilder, private router: Router) {
+  constructor(private authServ: AuthService, private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(24)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/[\w.+-]+@[\w.-]+\.[\D]{2,4}/)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     },
@@ -38,14 +37,11 @@ export class RegisterComponent implements OnInit {
 
       if (pass.value !== confPass.value) {
         confPass.setErrors({mustMatch: true});
-      } else {
-        confPass.setErrors(null);
       }
     };
   }
 
   register(value: {name: string, email: string, password: string }) {
-    console.log(value);
     this.submitted = true;
 
     if (this.registerForm.invalid) {
@@ -54,9 +50,5 @@ export class RegisterComponent implements OnInit {
     } else {
       this.authServ.doRegister(value);
     }
-  }
-
-  toLogin() {
-    this.router.navigate(['login']);
   }
 }
