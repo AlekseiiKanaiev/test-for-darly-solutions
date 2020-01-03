@@ -11,12 +11,15 @@ export const environment = {
     projectId: 'test-for-darly-solutions',
     storageBucket: 'test-for-darly-solutions.appspot.com',
     messagingSenderId: '77174654156',
-    appId: '1:77174654156:web:8436c607391c7c47f62e69'
+    appId: '1:77174654156:web:8436c607391c7c47f62e69',
   },
   database: 'firebase',
   socialAuthEnabled: true,
 };
 
+/**
+ * https://test-for-darly-solutions.firebaseapp.com/__/auth/action
+ */
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

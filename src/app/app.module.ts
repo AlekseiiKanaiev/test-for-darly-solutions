@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { AuthGuard } from './auth-firebase/_guards/auth.guard';
 import { AuthFirebaseModule } from './auth-firebase/auth.module';
 import { AlertService } from './auth-firebase/_services/alert.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +19,9 @@ import { AlertService } from './auth-firebase/_services/alert.service';
   imports: [
     BrowserModule,
     AuthFirebaseModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,

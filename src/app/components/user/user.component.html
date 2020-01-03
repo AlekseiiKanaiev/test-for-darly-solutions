@@ -1,3 +1,7 @@
 <h2 *ngIf="user">Hello, {{user.displayName}}</h2>
+<div>
+    <a [routerLink]="['/change-password']" routerLinkActive="router-link-active">Change password</a>
+</div>
+<router-outlet></router-outlet>
 
 <button (click) = 'logOut()'>Log out</button>

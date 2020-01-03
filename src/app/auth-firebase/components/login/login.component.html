@@ -22,14 +22,15 @@
                     <div class="form-group">
                         <button class="btn btn-primary">Login</button>
                     </div>
+                    <p id="reset-pass" class="link" (click) = 'resetPass()'>Forgot password?</p>
                 </form>
                 <div class="google-login">
-                    <p (click) = 'googleLogin()' class="google-link">Login with Google</p>
+                    <p (click) = 'googleLogin()' class="link" id="google-link">Login with Google</p>
                     <!-- <button class="btn btn-primary" (click) = 'googleLogin()'>Google</button> -->
                 </div>
                 <div class="to-register">
                     <p>Not registred yet?</p>
-                    <a [routerLink]="['/register']" routerLinkActive="router-link-active" class="register-link">
+                    <a [routerLink]="['/register']" routerLinkActive="router-link-active" class="link" id="register-link">
                         Create accout now
                     </a>
                 </div>
