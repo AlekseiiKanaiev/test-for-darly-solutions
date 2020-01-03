@@ -11,7 +11,8 @@ export const environment = {
     projectId: 'test-for-darly-solutions',
     storageBucket: 'test-for-darly-solutions.appspot.com',
     messagingSenderId: '77174654156',
-    appId: '1:77174654156:web:8436c607391c7c47f62e69'
+    appId: '1:77174654156:web:8436c607391c7c47f62e69',
+    oobCode: '6KLLJpFUt6awYQl3iUfSiWfOVpt4B2v8g-fuvHDGIvMAAAFvZniGLQ'
   },
   database: 'firebase',
   socialAuthEnabled: true,

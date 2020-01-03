@@ -14,17 +14,20 @@ import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { AlertComponent } from './components/alert/alert.component';
 import { AlertService } from './_services/alert.service';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 
 const authRoutes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
-    {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
+    {path: 'register', component: RegisterComponent, canActivate: [AuthGuard], pathMatch: 'full'},
+    {path: 'register/email-verification', component: EmailVerificationComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
     declarations: [
         LoginComponent,
         RegisterComponent,
-        AlertComponent
+        AlertComponent,
+        EmailVerificationComponent
     ],
     imports: [
         CommonModule,
