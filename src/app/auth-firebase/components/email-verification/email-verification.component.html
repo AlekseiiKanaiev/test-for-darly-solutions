@@ -1,7 +1,7 @@
 <div *ngIf="user">
     <div *ngIf="user.emailVerified; then verifiedBlock; else notVerifiedBlock"></div>
     <ng-template #verifiedBlock>
-        <p>You have veen ferified</p>
+        <!-- <p>You have been ferified</p> -->
         <a [routerLink]="['/user']" routerLinkActive="router-link-active">toUser</a>
     </ng-template>
     <ng-template #notVerifiedBlock>

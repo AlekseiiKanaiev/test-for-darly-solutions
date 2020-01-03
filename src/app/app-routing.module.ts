@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 // import { RegisterComponent } from './components/register/register.component';
 import { UserComponent } from './components/user/user.component';
 import { AuthGuard } from './auth-firebase/_guards/auth.guard';
-import { ChangePassComponent } from './components/change-pass/change-pass.component';
+import { ChangePassComponent } from './auth-firebase/components/change-pass/change-pass.component';
 
 // const userChild: Routes = [
 //   {path: 'user/change-password', component: ChangePassComponent}
@@ -17,7 +17,6 @@ const routes: Routes = [
   // {path: 'login', component: LoginComponent},
   // {path: 'register', component: RegisterComponent},
   {path: 'user', component: UserComponent, canActivate: [AuthGuard], pathMatch: 'full'},
-  {path: 'user/change-password', component: ChangePassComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'login'}
 ];
 

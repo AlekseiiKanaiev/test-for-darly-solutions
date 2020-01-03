@@ -8,7 +8,7 @@ export class AlertService {
     private keepAfterNavagationChange = false;
 
     constructor(private router: Router) {
-        router.events.subscribe(
+        this.router.events.subscribe(
             event => {
                 if (event instanceof NavigationStart) {
                     (this.keepAfterNavagationChange) ?

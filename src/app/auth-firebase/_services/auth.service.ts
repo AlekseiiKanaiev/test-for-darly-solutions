@@ -17,7 +17,7 @@ export class AuthService {
         this.userData = afAuth.authState;
         this.userData.subscribe(
             (user: firebase.User) => {
-                console.log(user);
+                // console.log(user);
                 if (user) {
                     this.user = user;
                     localStorage.setItem('user', JSON.stringify(this.user));
@@ -29,26 +29,20 @@ export class AuthService {
     }
 
     isLoggedIn(): boolean {
-        console.log(JSON.parse(localStorage.getItem('user')));
+        // console.log(JSON.parse(localStorage.getItem('user')));
         return JSON.parse(localStorage.getItem('user')) !== null;
     }
 
     isVerified(): boolean {
-        // console.log(JSON.parse(localStorage.getItem('user')).emailVerified);
-        // return true;
-        return this.isLoggedIn() ? JSON.parse(localStorage.getItem('user')).emailVerified === true : false;
-    }
-
-    verifyEmail(code: string) {
-        this.afAuth.auth.applyActionCode(code)
-        .then(
-            res => {
-                this.alertServ.alertSuccess('Your email has been successfully ferified', true);
-                console.log(JSON.parse(localStorage.getItem('user')));
-                // this.navigate('user');
+        if (this.isLoggedIn()) {
+            if (JSON.parse(localStorage.getItem('user')).emailVerified) {
+                return true;
+            } else {
+                this.alertServ.alertError('You must verify your email');
+                return false;
             }
-        )
-        .catch(err => this.alertServ.alertError(err.message));
+        }
+        return false;
     }
 
     private navigate(url: string) {
@@ -75,6 +69,7 @@ export class AuthService {
     async doEmailAndPasswordLogin(value: { email: string; password: string; }) {
         try {
             const res = await this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password);
+            // console.log(res.user.emailVerified);
             this.alertServ.alertSuccess('You have been successfully logged in', true);
             this.navigate('user');
         } catch (err) {
@@ -87,7 +82,8 @@ export class AuthService {
             .then(
                 res => {
                     res.user.updateProfile({displayName: value.name});
-                    res.user.sendEmailVerification()
+                    const actionSetting = {url: 'http://localhost:4200/register/email-verification'};
+                    res.user.sendEmailVerification(actionSetting)
                         .then(
                             result => {
                                 this.alertServ.alertSuccess('You have been successfully registred', true);
@@ -95,9 +91,23 @@ export class AuthService {
                             }
                         )
                         .catch(err => this.alertServ.alertError(err.messsage));
-                    // this.alertServ.alertSuccess('You have been successfully registred', true);
-                    // this.navigate('/register/email-verification');
                 }
+            )
+            .catch(err => this.alertServ.alertError(err.message));
+    }
+
+    logOut() {
+        this.afAuth.auth.signOut().then(() => {
+            localStorage.removeItem('user');
+            this.navigate('login');
+        });
+    }
+
+    forgotPassword(email: string) {
+        const actionSetting = {url: 'http://localhost:4200/login'};
+        return this.afAuth.auth.sendPasswordResetEmail(email, actionSetting)
+            .then(
+                res => this.alertServ.alertSuccess('New password sent. Check your email box.')
             )
             .catch(err => this.alertServ.alertError(err.message));
     }
@@ -115,12 +125,5 @@ export class AuthService {
                 )
                 .catch(err => this.alertServ.alertError(err.message));
         }
-    }
-
-    logOut() {
-        this.afAuth.auth.signOut().then(() => {
-            localStorage.removeItem('user');
-            this.navigate('login');
-        });
     }
 }

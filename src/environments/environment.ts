@@ -17,6 +17,9 @@ export const environment = {
   socialAuthEnabled: true,
 };
 
+/**
+ * https://test-for-darly-solutions.firebaseapp.com/__/auth/action
+ */
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

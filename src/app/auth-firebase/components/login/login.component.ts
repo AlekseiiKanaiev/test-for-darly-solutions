@@ -11,13 +11,14 @@ import { AlertService } from '../../_services/alert.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  private pattern = /[\w.+-]+@[\w.-]+\.[\D]{2,4}/;
   // user: string;
 
   constructor(private authServ: AuthService, private fb: FormBuilder, private alertServ: AlertService) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(/[\w.+-]+@[\w.-]+\.[\D]{2,4}/)]],
+      email: ['', [Validators.required, Validators.pattern(this.pattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -37,5 +38,12 @@ export class LoginComponent implements OnInit {
 
   googleLogin() {
     this.authServ.doGoogleLogin();
+  }
+
+  resetPass() {
+    const email = prompt('Enter your email', this.f.email.value || '');
+    if (email && email.match(this.pattern)) {
+      this.authServ.forgotPassword(email);
+    }
   }
 }
