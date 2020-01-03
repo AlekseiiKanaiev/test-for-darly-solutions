@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
         console.log(route.queryParams);
         console.log(state);
-        if (route.queryParams.mode === 'verifyEmail') {
+        if (route.queryParams.mode === 'verifyEmail' && route.queryParams.apiKey === environment.firebase.apiKey) {
                 console.log(1);
                 this.authServ.verifyEmail(route.queryParams.oobCode);
         }

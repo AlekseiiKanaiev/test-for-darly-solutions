@@ -45,7 +45,7 @@ export class AuthService {
             res => {
                 this.alertServ.alertSuccess('Your email has been successfully ferified', true);
                 console.log(JSON.parse(localStorage.getItem('user')));
-                this.navigate('user');
+                // this.navigate('user');
             }
         )
         .catch(err => this.alertServ.alertError(err.message));
@@ -76,7 +76,7 @@ export class AuthService {
         try {
             const res = await this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password);
             this.alertServ.alertSuccess('You have been successfully logged in', true);
-            // this.navigate('user');
+            this.navigate('user');
         } catch (err) {
             return this.alertServ.alertError(err.message);
         }
